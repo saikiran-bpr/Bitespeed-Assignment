@@ -21,9 +21,10 @@ model Contact {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   deletedAt      DateTime?
+  parentContact  Contact?   @relation("parentContact", fields: [linkedId], references: [id])
+  LinkedContacts Contact[] @relation("parentContact")
 }
 
-// Enum for linkPrecedence
 enum LinkPrecedence {
   primary
   secondary

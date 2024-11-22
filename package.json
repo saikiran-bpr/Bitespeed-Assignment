@@ -11,6 +11,9 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
   },
+  "prisma": {
+    "schema": "src/models/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
