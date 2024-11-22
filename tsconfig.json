@@ -11,6 +11,9 @@
     "resolveJsonModule": true,       // Allow importing `.json` files
     "typeRoots": ["./node_modules/@types"],
     "strictNullChecks": true, // Ensures null and undefined are explicitly handled
+    "noImplicitAny": true, // Disallows implicit `any` type
+    "noUnusedLocals": true, // Reports unused local variables
+    "noUnusedParameters": true, // Reports unused function parameters
     "noImplicitReturns": true, // Requires functions to return a value explicitly
     "noFallthroughCasesInSwitch": true // Ensures `switch` cases have `break` statements // Look for type definitions here
   },
