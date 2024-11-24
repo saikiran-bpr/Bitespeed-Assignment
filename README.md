@@ -16,7 +16,6 @@ This project implements a backend service for the **Bitespeed Identity Reconcili
 - [Setup Instructions](#setup-instructions)
 - [How It Works](#how-it-works)
 - [Examples](#examples)
-- [Future Enhancements](#future-enhancements)
 
 ---
 
@@ -82,3 +81,15 @@ Dr. Emmett Brown, using different emails and phone numbers for his purchases, po
   "email": "string (optional)",
   "phoneNumber": "string (optional)"
 }
+```
+### Response Body 
+```json
+{
+   "contact": {
+      "primaryContactId": number,
+      "emails": ["string"],
+      "phoneNumbers": ["string"],
+      "secondaryContactIds": [number]
+   }
+}
+```
