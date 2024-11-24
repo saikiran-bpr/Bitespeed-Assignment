@@ -18,11 +18,11 @@ model Contact {
   email          String? 
   linkedId       Int?  
   linkPrecedence LinkPrecedence
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
   deletedAt      DateTime?
-  parentContact  Contact?   @relation("parentContact", fields: [linkedId], references: [id])
-  LinkedContacts Contact[] @relation("parentContact")
+  parentContact  Contact?   @relation("contactToContact", fields: [linkedId], references: [id])
+  linkedContacts Contact[]  @relation("contactToContact")
 }
 
 enum LinkPrecedence {
