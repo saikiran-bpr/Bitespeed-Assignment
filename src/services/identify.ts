@@ -1,6 +1,5 @@
 import prisma from "../db/dbconfig";
 
-// Interfaces for type definitions
 interface Contact {
     id: number;
     email: string | null;
@@ -144,7 +143,7 @@ export default class ContactService {
             return await this.manageResponse(parentId);
         }
 
-        // Case 3 : When Secondary created if the data is already present in the tree.
+        // Case 3 : When data is already present in the tree.
         let isEmailMatched : Boolean = this.email ? false : true, isPhoneNumberMatched : Boolean = this.phoneNumber ? false : true;
 
         matchedData.forEach(data => {
