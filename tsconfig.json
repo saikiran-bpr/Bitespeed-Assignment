@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",              // JavaScript version for output
-    "module": "CommonJS",            // Module system used in Node.js
-    "rootDir": "./src",              // Location of TypeScript source files
-    "outDir": "./dist",              // Output directory for compiled files
-    "strict": true,                  // Enable all strict type-checking options
-    "esModuleInterop": true,         // Allow compatibility with ES6 modules
-    "skipLibCheck": true,            // Skip type checks on declaration files
-    "forceConsistentCasingInFileNames": true, // Enforce consistent file naming
-    "resolveJsonModule": true,       // Allow importing `.json` files
-    "typeRoots": ["./node_modules/@types"],
-    "strictNullChecks": true, // Ensures null and undefined are explicitly handled
-    "noImplicitAny": true, // Disallows implicit `any` type
-    "noUnusedLocals": true, // Reports unused local variables
-    "noUnusedParameters": true, // Reports unused function parameters
-    "noImplicitReturns": true, // Requires functions to return a value explicitly
-    "noFallthroughCasesInSwitch": true // Ensures `switch` cases have `break` statements // Look for type definitions here
+    "target": "ESNext",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*", "node_modules/@prisma/client"],           // Files to include
-  "exclude": ["node_modules", "dist"] // Files to exclude
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
