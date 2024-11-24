@@ -12,6 +12,8 @@ export const postData = async (req : Request, res : Response) => {
         const data = await contact.processData();
         res.status(200).json(data);
     } catch(e){
-        res.status(500).send("Internal server error");
+        res.status(500).json({
+            message : "Internal Server Error"
+        });
     }
 }

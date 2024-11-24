@@ -27,11 +27,10 @@ export default class ContactService {
         this.phoneNumber = phoneNumber;
     }
 
-    async getDataByEmailAndPhoneNumber(condition : string): Promise<Contact[]> {
-        let type = condition === "OR" ? "OR" : "AND";
+    async getDataByEmailOrPhoneNumber(): Promise<Contact[]> {
         return await prisma.contact.findMany({
             where: {
-                [type]: [
+                OR : [
                     { email: this.email },
                     { phoneNumber: this.phoneNumber },
                 ],
@@ -96,14 +95,9 @@ export default class ContactService {
     }
 
     async processData(): Promise<ProcessedData> {
-        const fetchedContacts = await this.getDataByEmailAndPhoneNumber("AND");
-        if(fetchedContacts.length >= 1){
-            let parentId = fetchedContacts[0].linkedId ? fetchedContacts[0].linkedId : fetchedContacts[0].id;
-            return this.manageResponse(parentId);
-        }
-        const matchedData = await this.getDataByEmailAndPhoneNumber("OR");
+        const matchedData = await this.getDataByEmailOrPhoneNumber();
 
-        // Case 1: 
+        // Case 1: Where Primary contact should be created
         if (matchedData.length === 0) {
             const newContact = await this.createData();
             return {
@@ -114,14 +108,9 @@ export default class ContactService {
             };
         }
 
-        // Case 2: 
+        // Case 2: Update because the data is matched from two trees.
         const parentIds = this.checkData(matchedData);
-        if (parentIds.length === 1) {
-            const parentId = parentIds[0];
-            await this.createData(parentId);
-            return this.manageResponse(parentId);
-        } else {
-            // Case 3:
+        if(parentIds.length === 2){
             let primaryDetails1 = await this.getPrimaryDataDetails(parentIds[0]);
             let primaryDetails2 = await this.getPrimaryDataDetails(parentIds[1]);
 
@@ -152,7 +141,23 @@ export default class ContactService {
             });
 
             const parentId = parentIds[0];
-            return this.manageResponse(parentId);
+            return await this.manageResponse(parentId);
         }
+
+        // Case 3 : When Secondary created if the data is already present in the tree.
+        let isEmailMatched : Boolean = this.email ? false : true, isPhoneNumberMatched : Boolean = this.phoneNumber ? false : true;
+
+        matchedData.forEach(data => {
+            if(data.email == this.email) isEmailMatched = true;
+            if(data.phoneNumber == this.phoneNumber) isPhoneNumberMatched = true;
+        });
+
+        const parentId = parentIds[0];
+        if(isEmailMatched && isPhoneNumberMatched){
+            return await this.manageResponse(parentId);
+        }
+        // Case 4 : When Secondary created if the data is unique and not already present in the tree.
+        await this.createData(parentId);
+        return await this.manageResponse(parentId);
     }
 }
