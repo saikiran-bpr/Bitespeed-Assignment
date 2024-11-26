@@ -14,7 +14,6 @@ This project implements a backend service for the **Bitespeed Identity Reconcili
 - [Database Schema](#database-schema)
 - [API Endpoint](#api-endpoint)
 - [Setup Instructions](#setup-instructions)
-- [How It Works](#how-it-works)
 - [Examples](#examples)
 
 ---
@@ -86,10 +85,103 @@ Dr. Emmett Brown, using different emails and phone numbers for his purchases, po
 ```json
 {
    "contact": {
-      "primaryContactId": number,
+      "primaryContactId": "number",
       "emails": ["string"],
       "phoneNumbers": ["string"],
-      "secondaryContactIds": [number]
+      "secondaryContactIds": ["number"]
    }
 }
 ```
+
+## Setup Instructions
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- **Node.js** (v16 or above)
+- **MySQL** database
+- **npm** or **yarn**
+- **Prisma CLI**
+
+---
+
+### Steps to Set Up the Project
+
+1. **Clone the Repository**  
+   Clone the repository from GitHub using the command:
+
+   ```bash
+   git clone <repository-url>
+   ```
+2. **Install Dependencies**
+   Install the required Node.js packages using npm or yarn:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. **Configure Environment Variables**
+   Create a .env file in the root of your project and add the following variables:
+
+   ```bash
+   DATABASE_URL="mysql://<username>:<password>@<host>/<database>"
+   PORT=3000
+   ```
+4. **Run Database Migrations**
+   Use Prisma to create the necessary tables in the database:
+
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Start the Server**
+   Start the backend server locally:
+
+   ```bash
+   npm run dev
+   ```
+6. **Test the API**
+   Use Postman, cURL, or any other API client to test the `/identify` endpoint.
+
+## Examples 
+
+#### Request:
+
+```json
+{
+  "email": "newuser@example.com",
+  "phoneNumber": "9876543210"
+}
+```
+
+```json
+{
+  "contact": {
+    "primaryContactId": 10,
+    "emails": ["newuser@example.com"],
+    "phoneNumbers": ["9876543210"],
+    "secondaryContactIds": []
+  }
+}
+```
+
+```json
+{
+  "email": "lorraine@hillvalley.edu",
+  "phoneNumber": "123456"
+}
+```
+
+```json
+{
+  "contact": {
+    "primaryContactId": 1,
+    "emails": ["lorraine@hillvalley.edu", "mcfly@hillvalley.edu"],
+    "phoneNumbers": ["123456"],
+    "secondaryContactIds": [23]
+  }
+}
+```
+
